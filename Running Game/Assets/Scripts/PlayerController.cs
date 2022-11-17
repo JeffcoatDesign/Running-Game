@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public float maxLift;
     public float liftDecay;
     public float liftAdd;
+    public ParticleSystem jetpackParticles;
     private Vector3 startPos;
     private float curLiftAmnt;
     private Rigidbody2D rig;
@@ -28,11 +29,13 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Space) && curLiftAmnt != 0)
         {
+            jetpackParticles.Play();
             rig.velocity = new Vector2(rig.velocity.x, liftForce);
             curLiftAmnt = Mathf.Clamp(curLiftAmnt - liftDecay * Time.deltaTime, 0, maxLift);
         }
         else if (!Input.GetKey(KeyCode.Space))
         {
+            jetpackParticles.Stop();
             curLiftAmnt = Mathf.Clamp(curLiftAmnt + liftAdd * Time.deltaTime, 0, maxLift);
         }
     }
